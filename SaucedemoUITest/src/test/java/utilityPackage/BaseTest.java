@@ -3,7 +3,9 @@ package utilityPackage;
 
 import PageClass.*;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 
+@Listeners(ExtendReportListener.class)
 public class BaseTest extends SeleniumUtils {
     public static LoginPage loginPage;
     public static ProductPage productPage;

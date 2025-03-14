@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import utilityPackage.SeleniumUtils;
 
 public class ProductPage extends SeleniumUtils {
-    By bikeLight = By.xpath("//div[text()='Sauce Labs Bike Light']" +
+    By bikeLight = By.xpath("//div[text()='Sace Labs Bike Light']" +
             greatGrandParent +
             "//button");
     By onesie = By.xpath("//div[text()='Sauce Labs Onesie']" +

@@ -1,10 +1,12 @@
 package org.example;
 import org.testng.annotations.Test;
 import utilityPackage.BaseTest;
+import utilityPackage.Rerun;
 
 public class AppTest extends BaseTest {
-    @Test
+    @Test()
     public void generalValidationOfE2E() {
+
     loginPage.login();
     productPage.selectBikeLight();
     productPage.selectOnesie();
