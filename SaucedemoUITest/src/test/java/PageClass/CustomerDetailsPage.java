@@ -7,7 +7,7 @@ import utilityPackage.SeleniumUtils;
 public class CustomerDetailsPage extends SeleniumUtils {
     By firstName = By.id("first-name");
     By lastName = By.id("last-name");
-    By postalCode = By.id("postal-code");
+    By postalCode = By.id("posta-code");
     By continueButton = By.xpath("//input[@class='btn_primary cart_button']");
     public void enterFirstName(){
         driver.findElement(firstName).sendKeys("hari");

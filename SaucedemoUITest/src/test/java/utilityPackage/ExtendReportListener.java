@@ -2,12 +2,22 @@ package utilityPackage;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-public class ExtendReportListener implements ITestListener {
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Calendar;
+import java.util.Date;
+
+public class ExtendReportListener extends BaseTest implements ITestListener {
         private ExtentSparkReporter sparkReporter;
         private ExtentReports extent;
         private ExtentTest test;
@@ -15,7 +25,7 @@ public class ExtendReportListener implements ITestListener {
         @Override
         public void onStart(ITestContext context) {
             // Creating ExtentHtmlReporter to write the report to a file
-            sparkReporter = new ExtentSparkReporter("test-output/ExtentReport.html");
+            sparkReporter = new ExtentSparkReporter("test-output/ExtentReport"+ System.currentTimeMillis() + ".html");
 
             // Creating an instance of ExtentReports
             extent = new ExtentReports();
@@ -42,7 +52,8 @@ public class ExtendReportListener implements ITestListener {
         @Override
         public void onTestFailure(ITestResult result) {
             // Marking the test as failed and capturing the failure details
-            test.fail(result.getThrowable());
+            test.fail(result.getThrowable(), MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot(), result.getMethod().getMethodName()).build());
+            test.getModel().setEndTime(getTime(result.getEndMillis()));
         }
 
         @Override
@@ -56,4 +67,9 @@ public class ExtendReportListener implements ITestListener {
             // Flushing the report to save it
             extent.flush();
         }
+    private Date getTime(long millis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        return calendar.getTime();
+    }
 }
