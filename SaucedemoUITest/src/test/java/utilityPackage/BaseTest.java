@@ -10,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -34,7 +35,7 @@ public class BaseTest extends SeleniumUtils {
     }
     @AfterClass
     public static void teardown() {
-    driver.quit();
+        driver.quit();
     }
     public String takeScreenshot() {
         File screenshotDir = new File(System.getProperty("user.dir") + "/test-output/screenshots/");
