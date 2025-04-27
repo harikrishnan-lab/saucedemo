@@ -13,12 +13,12 @@ public class ProductPage extends SeleniumUtils {
     By cart = By.id("shopping_cart_container");
 
     public void selectBikeLight(){
-        driver.findElement(bikeLight).click();
+        clickElement(bikeLight);
     }
     public void selectOnesie(){
-        driver.findElement(onesie).click();
+        clickElement(onesie);
     }
     public void gotoCart() {
-        driver.findElement(cart).click();
+        clickElement(cart);
     }
 }

@@ -8,9 +8,9 @@ public class LoginPage extends SeleniumUtils {
     By password = By.id("password");
     By loginButton = By.id("login-button");
     public void login(){
-        driver.findElement(userName).sendKeys("standard_user");
-        driver.findElement(password).sendKeys("secret_sauce");
-        driver.findElement(loginButton).click();
+        enterText(userName,"standard_user");
+        enterText(password,"secret_sauce");
+        clickElement(loginButton);
     }
 
 }
