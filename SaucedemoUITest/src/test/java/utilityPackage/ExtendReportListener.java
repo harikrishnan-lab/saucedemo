@@ -114,7 +114,7 @@ public class ExtendReportListener extends BaseTest implements ITestListener {
             if (htmlFile.exists()) {
                 Desktop.getDesktop().browse(htmlFile.toURI());
             } else {
-                System.out.println("Report file not found to open automatically.");
+                System.out.println("Report file not able to open automatically.");
             }
         } catch (IOException e) {
             e.printStackTrace();
