@@ -1,7 +1,7 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-.idea/uiDesigner.xml
-.idea/inspectionProfiles/Project_Default.xml
+/uiDesigner.xml
+/inspectionProfiles/Project_Default.xml
 target
 SaucedemoUITest/target
