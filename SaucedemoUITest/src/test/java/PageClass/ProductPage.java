@@ -1,9 +1,9 @@
 package PageClass;
 
 import org.openqa.selenium.By;
-import utilityPackage.SeleniumUtils;
+import utilityPackage.selenium.seleniumUtil;
 
-public class ProductPage extends SeleniumUtils {
+public class ProductPage extends seleniumUtil.SeleniumUtils {
     By bikeLight = By.xpath("//div[text()='Sauce Labs Bike Light']" +
             greatGrandParent +
             "//button");

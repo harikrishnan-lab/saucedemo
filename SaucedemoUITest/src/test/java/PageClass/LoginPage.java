@@ -1,9 +1,9 @@
 package PageClass;
 
 import org.openqa.selenium.By;
-import utilityPackage.SeleniumUtils;
+import utilityPackage.selenium.seleniumUtil;
 
-public class LoginPage extends SeleniumUtils {
+public class LoginPage extends seleniumUtil.SeleniumUtils {
     By userName = By.id("user-name");
     By password = By.id("password");
     By loginButton = By.id("login-button");

@@ -1,8 +1,9 @@
-package utilityPackage;
+package utilityPackage.ReportUtil;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.model.Media;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import org.openqa.selenium.OutputType;
@@ -10,6 +11,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import utilityPackage.BaseTest;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -119,5 +121,31 @@ public class ExtendReportListener extends BaseTest implements ITestListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void reportStep(String desc, String status, boolean bSnap) {
+        synchronized (test) {
+            // Start reporting the step and snapshot
+            Media img = null;
+            if (bSnap && !(status.equalsIgnoreCase("INFO") || status.equalsIgnoreCase("skipped"))) {
+                img = MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build();
+            }
+            if (status.equalsIgnoreCase("pass")) {
+                test.pass(desc, img);
+            } else if (status.equalsIgnoreCase("fail")) { // additional steps to manage alert pop-up
+                test.fail(desc, MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+                throw new RuntimeException("See the reporter for details.");
+            } else if (status.equalsIgnoreCase("warning")) {
+                test.warning(desc, MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            } else if (status.equalsIgnoreCase("skipped")) {
+                test.skip("The test is skipped due to dependency failure");
+            } else if (status.equalsIgnoreCase("INFO")) {
+                test.info(desc, img);
+            }
+        }
+    }
+    public void reportStep(String desc, String status) {
+        Log.info(desc);
+        reportStep(desc,status,true);
     }
 }

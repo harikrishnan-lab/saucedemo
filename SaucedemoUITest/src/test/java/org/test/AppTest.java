@@ -1,12 +1,10 @@
-package org.example;
+package org.test;
 import org.testng.annotations.Test;
-import utilityPackage.BaseTest;
-import utilityPackage.Rerun;
+import utilityPackage.ReportUtil.ExtendReportListener;
 
-public class AppTest extends BaseTest {
+public class AppTest extends ExtendReportListener {
     @Test()
     public void generalValidationOfE2E() {
-
     loginPage.login();
     productPage.selectBikeLight();
     productPage.selectOnesie();
@@ -17,6 +15,5 @@ public class AppTest extends BaseTest {
     customerDetailsPage.enterPostalCode();
     customerDetailsPage.clickContinueButton();
     finishPage.clickFinishButton();
-
     }
 }

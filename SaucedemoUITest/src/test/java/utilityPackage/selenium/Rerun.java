@@ -1,4 +1,4 @@
-package utilityPackage;
+package utilityPackage.selenium;
 
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
@@ -18,7 +18,7 @@ public class Rerun implements IRetryAnalyzer {
         return false;
     }
 
-    public void method(){
+    public void method() {
         int failure = 0;
         int run = 5;
         if (failure < run) {
