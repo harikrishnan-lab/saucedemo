@@ -1,4 +1,4 @@
-package utilityPackage.ReportUtil;
+package utilityPackage.selenium;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -12,6 +12,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import utilityPackage.BaseTest;
+import utilityPackage.ReportUtil.Log;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -22,10 +23,6 @@ import java.util.Date;
 
 public class ExtendReportListener extends BaseTest implements ITestListener {
 
-    private ExtentSparkReporter sparkReporter;
-    private ExtentReports extent;
-    private ExtentTest test;
-    private static String reportPath;
 
     @Override
     public void onStart(ITestContext context) {
@@ -144,8 +141,9 @@ public class ExtendReportListener extends BaseTest implements ITestListener {
             }
         }
     }
+
     public void reportStep(String desc, String status) {
         Log.info(desc);
-        reportStep(desc,status,true);
+        reportStep(desc, status, true);
     }
 }

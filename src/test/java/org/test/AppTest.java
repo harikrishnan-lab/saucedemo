@@ -1,6 +1,6 @@
 package org.test;
 import org.testng.annotations.Test;
-import utilityPackage.ReportUtil.ExtendReportListener;
+import utilityPackage.selenium.ExtendReportListener;
 
 public class AppTest extends ExtendReportListener {
     @Test()

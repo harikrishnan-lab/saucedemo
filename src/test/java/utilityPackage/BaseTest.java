@@ -2,6 +2,9 @@ package utilityPackage;
 
 
 import PageClass.*;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -12,7 +15,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
-import utilityPackage.ReportUtil.ExtendReportListener;
+import utilityPackage.selenium.ExtendReportListener;
 import utilityPackage.ReportUtil.Log;
 
 import java.io.File;
@@ -23,6 +26,10 @@ import static java.nio.file.Paths.get;
 
 @Listeners(ExtendReportListener.class)
 public class BaseTest{
+    public ExtentSparkReporter sparkReporter;
+    public ExtentReports extent;
+    public ExtentTest test;
+    public static String reportPath;
     public static LoginPage loginPage;
     public static ProductPage productPage;
     public static FinishPage finishPage;

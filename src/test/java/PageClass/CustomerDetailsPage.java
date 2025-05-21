@@ -3,7 +3,7 @@ package PageClass;
 import org.openqa.selenium.By;
 import utilityPackage.selenium.seleniumUtil;
 
-public class CustomerDetailsPage extends seleniumUtil.SeleniumUtils {
+public class CustomerDetailsPage extends seleniumUtil {
     By firstName = By.id("first-name");
     By lastName = By.id("last-name");
     By postalCode = By.id("postal-code");
