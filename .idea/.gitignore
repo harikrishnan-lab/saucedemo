@@ -1,6 +1,6 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-uiDesigner.xml
-Project_Default.xml
+.idea/uiDesigner.xml
+.idea/inspectionProfiles/Project_Default.xml
 
