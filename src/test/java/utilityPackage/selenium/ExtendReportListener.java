@@ -11,18 +11,18 @@ import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import utilityPackage.BaseTest;
+import utilityPackage.BaseClass;
 import utilityPackage.ReportUtil.Log;
-
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Calendar;
 import java.util.Date;
 
-public class ExtendReportListener extends BaseTest implements ITestListener {
-
+public class ExtendReportListener extends BaseClass implements ITestListener {
+    public ExtentSparkReporter sparkReporter;
+    public ExtentReports extent;
+    public static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+    public static String reportPath;
 
     @Override
     public void onStart(ITestContext context) {
@@ -55,29 +55,30 @@ public class ExtendReportListener extends BaseTest implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        test = extent.createTest(result.getMethod().getMethodName());
+        ExtentTest test = extent.createTest(result.getMethod().getMethodName());
+        extentTest.set(test);
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        test.pass("Test Passed");
+        extentTest.get().pass("Test Passed");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        test.fail(result.getThrowable());
+        extentTest.get().fail(result.getThrowable());
 
         // Attach screenshot if driver is not null
         if (driver != null) {
             String screenshotPath = takeScreenshot(result.getMethod().getMethodName());
-            test.fail("Screenshot of failure",
+            extentTest.get().fail("Screenshot of failure",
                     MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
         }
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        test.skip("Test Skipped");
+        extentTest.get().skip("Test Skipped");
     }
 
     @Override
@@ -101,19 +102,23 @@ public class ExtendReportListener extends BaseTest implements ITestListener {
         return screenshotPath;
     }
 
-    private Date getTime(long millis) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(millis);
-        return calendar.getTime();
-    }
-
     private void openReportInBrowser() {
         try {
             File htmlFile = new File(reportPath);
             if (htmlFile.exists()) {
-                Desktop.getDesktop().browse(htmlFile.toURI());
+                // Replace with the actual path to your Chrome executable
+                String chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+
+                // Launch Chrome in a new window with the report
+                String[] command = {
+                        chromePath,
+                        "--new-window",
+                        htmlFile.getAbsolutePath()
+                };
+
+                Runtime.getRuntime().exec(command);
             } else {
-                System.out.println("Report file not able to open automatically.");
+                System.out.println("Report file not found. Unable to open in Chrome.");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -121,23 +126,23 @@ public class ExtendReportListener extends BaseTest implements ITestListener {
     }
 
     public void reportStep(String desc, String status, boolean bSnap) {
-        synchronized (test) {
+        synchronized (extentTest) {
             // Start reporting the step and snapshot
             Media img = null;
             if (bSnap && !(status.equalsIgnoreCase("INFO") || status.equalsIgnoreCase("skipped"))) {
                 img = MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build();
             }
             if (status.equalsIgnoreCase("pass")) {
-                test.pass(desc, img);
+                extentTest.get().pass(desc, img);
             } else if (status.equalsIgnoreCase("fail")) { // additional steps to manage alert pop-up
-                test.fail(desc, MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+                extentTest.get().fail(desc, MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
                 throw new RuntimeException("See the reporter for details.");
             } else if (status.equalsIgnoreCase("warning")) {
-                test.warning(desc, MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+                extentTest.get().warning(desc, MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
             } else if (status.equalsIgnoreCase("skipped")) {
-                test.skip("The test is skipped due to dependency failure");
+                extentTest.get().skip("The test is skipped due to dependency failure");
             } else if (status.equalsIgnoreCase("INFO")) {
-                test.info(desc, img);
+                extentTest.get().info(desc, img);
             }
         }
     }

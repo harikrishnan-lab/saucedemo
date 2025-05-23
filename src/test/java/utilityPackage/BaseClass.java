@@ -2,9 +2,6 @@ package utilityPackage;
 
 
 import PageClass.*;
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -22,20 +19,16 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
-import static java.nio.file.Paths.get;
-
 @Listeners(ExtendReportListener.class)
-public class BaseTest{
-    public ExtentSparkReporter sparkReporter;
-    public ExtentReports extent;
-    public ExtentTest test;
-    public static String reportPath;
+public class BaseClass {
+
     public static LoginPage loginPage;
     public static ProductPage productPage;
     public static FinishPage finishPage;
     public static CustomerDetailsPage customerDetailsPage;
     public static CartPage cartPage;
     public static WebDriver driver;
+
 @BeforeClass
     public static void setup() {
         initialiseDriver("chrome");
@@ -77,7 +70,7 @@ public class BaseTest{
             Log.info("Chrome Browser Opened");
         } else if (browser.equalsIgnoreCase("edge")) {
             driver = new InternetExplorerDriver();
-            Log.info("InternetExplorer Browser Opened");
+            Log.info("Internet Explorer Browser Opened");
         }
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(6));
@@ -86,5 +79,7 @@ public class BaseTest{
     public static void launchUrl() {
         driver.get("https://www.saucedemo.com/v1/");
     }
+
+
 }
 
